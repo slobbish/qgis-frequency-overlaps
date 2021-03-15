@@ -31,7 +31,8 @@ Frequency Overlaps Overview
 6) Select the units that this field is entered in.  Can be Hz, kHz, MHz or GHz.
 7) Limit the range to be displayed post analysis.  A 0 value will display maximum range.
 
-:underline:`There are 5 Search modes to check for frequency overlaps:`
+There are 5 Search modes to check for frequency overlaps:
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
