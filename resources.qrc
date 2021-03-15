@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/frequency_overlaps" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
