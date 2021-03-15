@@ -17,14 +17,23 @@ Difference Between Frequency and Bandwidth
 
 Bandwidth and frequency are the terms commonly used in communications and networking.  The bandwidth affects the size of the information that can be transferred while the frequency is the carrier for the information to be transferred on.  More information can be read from `Difference Between Frequency and Bandwidth <https://circuitglobe.com/difference-between-frequency-and-bandwidth.html#:~:text=The%20frequency%20of%20a%20signal%20defines%20the%20total%20number%20of,is%20specified%20as%20cycles%2Fsecond.>`_ .
 
-Functions of Frequency Overlaps
-===============================
+Frequency Overlaps Overview
+===========================
 .. index:: Functions of Frequency Overlaps
 
 .. image:: images/FrequencyOverlaps.png
 
 1) Select the QGIS layer from the drop down list which contains information about the location where the frequency is used.
 2) Select the mode where the data is entered in the layer.  This can be either Center Frequency & Bandwidth or Start & Stop Frequency.
+3) Select the field that contains the Center Frequency, if the Center Frequency mode is selected.
+4) Select the units that this field is entered in.  Can be Hz, kHz, MHz or GHz.
+5) Select the field that contains the Bandwidth, if the Center Frequency mode is selected.
+6) Select the units that this field is entered in.  Can be Hz, kHz, MHz or GHz.
+7) Limit the range to be displayed post analysis.  A 0 value will display maximum range.
+
+There are 5 Search modes to check for frequency overlaps:
+---------------------------------------------------------
+
 
 
 Contents:
