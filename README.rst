@@ -24,7 +24,7 @@ Functions of Frequency Overlaps
 .. image:: images/FrequencyOverlaps.png
 
 1) Select the QGIS layer from the drop down list which contains information about the location where the frequency is used.
-
+2) Select the mode where the data is entered in the layer.  This can be either Center Frequency & Bandwidth or Start & Stop Frequency.
 
 
 Contents:
