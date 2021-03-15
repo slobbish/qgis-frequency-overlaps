@@ -39,6 +39,21 @@ There are 5 Search modes to check for frequency overlaps:
 * Search for frequency
 * Search for frequency gaps
 
+Search within the layer
+-----------------------
+.. index:: Search within the layer
+
+This option searches for frequency overlaps between each feature in the layer.  The output may be overwhelming with a lot of frequency overlaps between each features.  Use the **Ignore Distance greater than** to limit overlaps that are within a distance away.
+
+The output may show a single circle only, such as the figure shown below.  This represents there is a frequency overlaps within frequencies on the same location.
+It may be noticed that the frequency of 1 channel is 8202.705 - 8203.295 MHz and the other channel is 8203.295 - 8204.217 MHz.  In a normal situation it seems like there is no overlaps.  The contention comes at the middle frequency 8203.295 MHz since it both belongs to the lower frequency channel and higher frequency channel and the algorithm treats such instance as an overlap.
+
+.. image:: images/On-site_Overlaps.png
+
+The output may also shows 2 circles with a dashed line linking them.  This represents frequency overlaps between the frequency of the 2 locations.  Open the attribute tables of "Overlap Locations" and "Overlap Joins" to get more information on which frequencies are overlapping.
+
+
+.. image:: images/AlternateSite_Overlaps.png
 
 
 
