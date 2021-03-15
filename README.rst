@@ -8,7 +8,7 @@ Welcome to FrequencyOverlaps!
 
 The goal of this plugin is to assist Spectrum Managers in searching for frequency resources especially when more and more services are put into use.  This plugin helps Spectrum Managers to search for overlaps in frequencies as each service normally encompass a frequency usage with an associated bandwidth for its' operation.  It becomes more difficult for Spectrum Managers to visualise if frequency overlaps occurs between 2 services and if these services are separated with geographically far enough without putting the information on a map.
 
-The user must first load in information of existing location of the services into QGIS a layer.  This can be imported in the form of an Excel 'Spreadsheet Layers <https://github.com/camptocamp/QGIS-SpreadSheetLayers>' into QGIS of from CSV, SHP and other formats which can be imported into QGIS. 
+The user must first load information of existing location of services as a layer in QGIS.  This can be imported from Excel `Spreadsheet Layers <https://github.com/camptocamp/QGIS-SpreadSheetLayers>`, CSV, Esri Shapefiles, MapInfo or any other formats supported by QGIS. 
 
 Contents:
 
