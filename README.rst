@@ -33,6 +33,11 @@ Frequency Overlaps Overview
 
 There are 5 Search modes to check for frequency overlaps:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+* Search within the layer
+* Search within a range
+* Search against another layer
+* Search for frequency
+* Search for frequency gaps
 
 
 
