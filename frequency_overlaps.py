@@ -741,11 +741,6 @@ class FrequencyOverlaps:
             sTgt_B_Units = sSrc_B_Units
             sSrc_A_Units = self.dlg.cmbFrequencySteps3.currentText().lstrip("in ")
             sSrc_B_Units = self.dlg.dsbBandwidth.suffix().strip()
-            self.dlg.dsbGapsStartFreq.setValue(fSrcStartFreq)
-            self.dlg.dsbGapsStopFreq.setValue(fSrcStopFreq)
-            self.dlg.cmbFrequencySteps4.setCurrentText("in {}".format(sSrc_A_Units))
-            self.dlg.dsbGapsStartFreq.setSuffix(" {}".format(sSrc_A_Units))
-            self.dlg.dsbGapsStopFreq.setSuffix(" {}".format(sSrc_A_Units))
 
             # loop through the layer to check which features overlaps this frequency range
             for srcLayer in lyrLayer.getFeatures():
@@ -1034,16 +1029,16 @@ class FrequencyOverlaps:
             if len(arrayFreqGaps) != 0:
                 # Insert the first gap if there is a frequency gap between the start frequency the user selected and the lowest frequency found on the map within this range
                 if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0],min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)])
+                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-1/1000000,min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-1/1000000])
                     vlOGpr.addFeature(f)
                 # Insert the rest of the frequency gaps into the table
                 for i in arrayFreqGaps:
-                    f.setAttributes([i[0],i[1],i[1]-i[0]])
+                    f.setAttributes([i[0]+1/1000000,i[1]-1/1000000,i[1]-i[0]-2/1000000])
                     vlOGpr.addFeature(f)
 
                 # Insert the last gap if there is a frequency gap between the stop frequency the user selected and the highest frequency found on the map within this range
                 if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                    f.setAttributes([max(arrayFoundFreq)[1],fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]])
+                    f.setAttributes([max(arrayFoundFreq)[1]+1/1000000,fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-1/1000000])
                     vlOGpr.addFeature(f)
             else:
                 # If there is nothing found, it means the whole range the user is searching for is available
@@ -1052,10 +1047,10 @@ class FrequencyOverlaps:
                     vlOGpr.addFeature(f)
                 else:
                     if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0],min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)])
+                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-1/1000000,min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-1/1000000])
                         vlOGpr.addFeature(f)
                     if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                        f.setAttributes([max(arrayFoundFreq)[1],fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]])
+                        f.setAttributes([max(arrayFoundFreq)[1]+1/1000000,fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-1/1000000])
                         vlOGpr.addFeature(f)
 
 
@@ -1171,6 +1166,16 @@ class FrequencyOverlaps:
             self.dlg.frmAgainstLayer.hide()
             self.dlg.frmFrequencyGaps.hide()
             self.dlg.sbIgnoreDistance.setEnabled(False)
+            sFreqBase = self.dlg.cmbFrequencySteps4.currentText().lstrip("in ")
+            sBandWidth = self.dlg.dsbBandwidth.suffix().strip()
+            self.dlg.cmbFrequencySteps3.setCurrentText("in {}".format(sFreqBase))
+            self.dlg.dsbStartFreq.setValue(self.dlg.dsbGapsStartFreq.value())
+            self.dlg.dsbStopFreq.setValue(self.dlg.dsbGapsStopFreq.value())
+            vA, vB, vC, vD = self.calcMissingFrequencyBandwidthVariables(sFreqBase,sBandWidth,0,0,self.dlg.dsbGapsStartFreq.value(),self.dlg.dsbGapsStopFreq.value())
+            self.dlg.dsbCenterFreq.setValue(vA)
+            self.dlg.dsbBandwidth.setValue(vB)
+            self.dlg.dsbStartFreq.setSuffix(" {}".format(self.dlg.cmbFrequencySteps4.currentText().lstrip("in ")))
+            self.dlg.dsbStopFreq.setSuffix(" {}".format(self.dlg.cmbFrequencySteps4.currentText().lstrip("in ")))
 
         if self.dlg.rbFrequencyGaps.isChecked() == True and rbSelected == True:
             self.dlg.frmWithinLayer.hide()
@@ -1178,6 +1183,11 @@ class FrequencyOverlaps:
             self.dlg.frmAgainstLayer.hide()
             self.dlg.frmFrequencyGaps.show()
             self.dlg.sbIgnoreDistance.setEnabled(True)
+            self.dlg.dsbGapsStartFreq.setValue(self.dlg.dsbStartFreq.value())
+            self.dlg.dsbGapsStopFreq.setValue(self.dlg.dsbStopFreq.value())
+            self.dlg.cmbFrequencySteps4.setCurrentText("in {}".format(self.dlg.cmbFrequencySteps3.currentText().lstrip("in ")))
+            self.dlg.dsbGapsStartFreq.setSuffix(" {}".format(self.dlg.cmbFrequencySteps3.currentText().lstrip("in ")))
+            self.dlg.dsbGapsStopFreq.setSuffix(" {}".format(self.dlg.cmbFrequencySteps3.currentText().lstrip("in ")))
 
     def evt_SearchAgainstRange_Changed(self,item3):
         ###########################################################################
