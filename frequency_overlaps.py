@@ -1029,16 +1029,16 @@ class FrequencyOverlaps:
             if len(arrayFreqGaps) != 0:
                 # Insert the first gap if there is a frequency gap between the start frequency the user selected and the lowest frequency found on the map within this range
                 if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-1/1000000,min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-1/1000000])
+                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-(1/1000000),min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-(1/1000000)])
                     vlOGpr.addFeature(f)
                 # Insert the rest of the frequency gaps into the table
                 for i in arrayFreqGaps:
-                    f.setAttributes([i[0]+1/1000000,i[1]-1/1000000,i[1]-i[0]-2/1000000])
+                    f.setAttributes([i[0]+(1/1000000),i[1]-(1/1000000),i[1]-i[0]-(2/1000000)])
                     vlOGpr.addFeature(f)
 
                 # Insert the last gap if there is a frequency gap between the stop frequency the user selected and the highest frequency found on the map within this range
                 if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                    f.setAttributes([max(arrayFoundFreq)[1]+1/1000000,fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-1/1000000])
+                    f.setAttributes([max(arrayFoundFreq)[1]+(1/1000000),fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-(1/1000000)])
                     vlOGpr.addFeature(f)
             else:
                 # If there is nothing found, it means the whole range the user is searching for is available
@@ -1047,10 +1047,10 @@ class FrequencyOverlaps:
                     vlOGpr.addFeature(f)
                 else:
                     if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-1/1000000,min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-1/1000000])
+                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-(1/1000000),min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-(1/1000000)])
                         vlOGpr.addFeature(f)
                     if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                        f.setAttributes([max(arrayFoundFreq)[1]+1/1000000,fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-1/1000000])
+                        f.setAttributes([max(arrayFoundFreq)[1]+(1/1000000),fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-(1/1000000)])
                         vlOGpr.addFeature(f)
 
 
