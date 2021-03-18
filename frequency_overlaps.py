@@ -1166,6 +1166,7 @@ class FrequencyOverlaps:
             self.dlg.frmAgainstLayer.hide()
             self.dlg.frmFrequencyGaps.hide()
             self.dlg.sbIgnoreDistance.setEnabled(False)
+            # Copy parameters from Frequency Gaps to relieve the need to retype the frequency for Search For Frequency
             sFreqBase = self.dlg.cmbFrequencySteps4.currentText().lstrip("in ")
             sBandWidth = self.dlg.dsbBandwidth.suffix().strip()
             self.dlg.cmbFrequencySteps3.setCurrentText("in {}".format(sFreqBase))
@@ -1183,6 +1184,7 @@ class FrequencyOverlaps:
             self.dlg.frmAgainstLayer.hide()
             self.dlg.frmFrequencyGaps.show()
             self.dlg.sbIgnoreDistance.setEnabled(True)
+            # Copy parameters from Search For Frequency to relieve the need to retype the frequency for Frequency Gaps
             self.dlg.dsbGapsStartFreq.setValue(self.dlg.dsbStartFreq.value())
             self.dlg.dsbGapsStopFreq.setValue(self.dlg.dsbStopFreq.value())
             self.dlg.cmbFrequencySteps4.setCurrentText("in {}".format(self.dlg.cmbFrequencySteps3.currentText().lstrip("in ")))

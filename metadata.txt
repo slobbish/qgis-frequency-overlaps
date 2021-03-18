@@ -6,14 +6,14 @@
 name=Frequency Overlaps
 qgisMinimumVersion=3.0
 description=Check for overlapping frequencies in a layer
-version=0.1
+version=0.5
 author=Cavin Wang
 email=kokkang_2000@yahoo.com
 
-about=Given a layer with center frequencies and bandwidth or containing the start and stop frequencies utilised, this plugin will identify location where overlaps of frequencies occurs.
+about=Given a layer with the radio center frequencies and bandwidth or containing the start and stop frequencies utilised, this plugin will identify location where overlaps of frequencies occurs.
 
 tracker=https://github.com/slobbish/qgis-frequency-overlaps/issues
-repository=https://github.com/slobbish/qgis-frequency-overlaps
+repository=https://github.com/slobbish/qgis-frequency-overlaps/tree/master
 # End of mandatory metadata
 
 # Recommended items:
@@ -23,9 +23,9 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=geometry, point, polygon, centroid, vector
+tags=geometry, point, polygon, centroid, vector,radio frequency, frequency overlaps
 
-homepage=https://www.facebook.com/cavin.wang
+homepage=https://github.com/slobbish/qgis-frequency-overlaps/tree/master
 category=Vector
 icon=icon.png
 # experimental flag
