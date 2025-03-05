@@ -6,7 +6,7 @@
 name=Frequency Overlaps
 qgisMinimumVersion=3.0
 description=Check for overlapping frequencies for spectrum management
-version=1.0.0
+version=1
 author=Cavin Wang
 email=kokkang_2000@yahoo.com
 
@@ -23,10 +23,10 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=geometry, point, polygon, vector, frequency analysis, frequency overlap, interference analysis, spectrum management, radio spectrum, frequency coordination, RF engineering, spectrum assignment, frequency planning
+tags=analysis, calculator, layers, centroid, polygon, point, search, vector, geometry, point, polygon, vector, frequency analysis, interference analysis, spectrum management, radio spectrum, frequency coordination, RF engineering, spectrum assignment, frequency planning
 
 homepage=https://github.com/slobbish/qgis-frequency-overlaps/tree/master
-category=Vector
+category=Plugins
 icon=icon.png
 # experimental flag
 experimental=False
@@ -40,7 +40,7 @@ deprecated=False
 # plugin_dependencies=
 
 Category of the plugin: Raster, Vector, Database or Web
-category=Vector
+# category=
 
 # If the plugin can run on QGIS Server.
 server=False
