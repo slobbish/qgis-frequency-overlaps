@@ -27,7 +27,7 @@ from qgis.PyQt.QtWidgets import QAction, QMessageBox,QTableView
 
 from qgis.core import QgsMapLayerProxyModel, QgsFieldProxyModel, QgsMessageLog, Qgis, QgsCoordinateReferenceSystem, QgsCoordinateTransform, QgsProject, QgsVectorLayer, QgsFeature, QgsGeometry, QgsPointXY, QgsApplication
 from qgis.gui import QgsMapToolEmitPoint, QgsMapTool
-import processing
+from qgis import processing
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -374,8 +374,8 @@ class FrequencyOverlaps:
                             geoDistance = geoSrc.distance(geoTgt)
 
                             if geoDistance < self.dlg.sbIgnoreDistance.value() or self.dlg.sbIgnoreDistance.value() == 0:
-                                geoSrcBuffer = geoSrc.buffer(300,10)
-                                geoTgtBuffer = geoTgt.buffer(300,10)
+                                geoSrcBuffer = geoSrc.buffer(100,10)
+                                geoTgtBuffer = geoTgt.buffer(100,10)
                                 geoCombine = geoSrcBuffer.combine(geoTgtBuffer)
                                 # Add 1 circle to source and 1 circle to target if overlap occurs
                                 f = QgsFeature()
@@ -391,7 +391,11 @@ class FrequencyOverlaps:
 
                 # update the progress bar on the completion status
                 intRecordsAnalyzed += 1
-                self.dlg.pbFrequencyOverlaps.setValue((intRecordsAnalyzed/intFeatureCounts)*100)
+                self.dlg.pbFrequencyOverlaps.setValue(int((intRecordsAnalyzed/intFeatureCounts)*100))
+
+                if not self.dlg.isVisible():
+                    QMessageBox.information(self.dlg, "Message", "Operation Cancelled")
+                    break
 
             # Add the polygon and line layers to the map
             vlOverlapLocations.updateExtents()
@@ -533,8 +537,8 @@ class FrequencyOverlaps:
                             # may result in the same feature in the cloned layer comparing with itself in the main layer.  This 2 should not be counted as being overlapped
                             if geoDistance == 0 and fSrcCenter != fTgtCenter and fSrcStart != fTgtStart and fSrcStop != fTgtStopFreq:
                                 # this section checks for overlapping frequency in the same geographical site between itself
-                                geoSrcBuffer = geoSrc.buffer(300,10)
-                                geoTgtBuffer = geoTgt.buffer(300,10)
+                                geoSrcBuffer = geoSrc.buffer(100,10)
+                                geoTgtBuffer = geoTgt.buffer(100,10)
                                 geoCombine = geoSrcBuffer.combine(geoTgtBuffer)
                                 f = QgsFeature()
                                 f.setGeometry(geoCombine)
@@ -542,8 +546,8 @@ class FrequencyOverlaps:
                                 vlOLpr.addFeature(f)
                             elif geoDistance != 0:
                                 # this section is for drawing 2 circles one for source and one for target feature
-                                geoSrcBuffer = geoSrc.buffer(300, 10)
-                                geoTgtBuffer = geoTgt.buffer(300, 10)
+                                geoSrcBuffer = geoSrc.buffer(100, 10)
+                                geoTgtBuffer = geoTgt.buffer(100, 10)
                                 geoCombine = geoSrcBuffer.combine(geoTgtBuffer)
                                 f = QgsFeature()
                                 f.setGeometry(geoCombine)
@@ -556,7 +560,11 @@ class FrequencyOverlaps:
                                 vlOJpr.addFeature(f)
                 # update the progress bar on the completion status
                 intRecordsAnalyzed += 1
-                self.dlg.pbFrequencyOverlaps.setValue((intRecordsAnalyzed / intFeatureCounts) * 100)
+                self.dlg.pbFrequencyOverlaps.setValue(int((intRecordsAnalyzed / intFeatureCounts) * 100))
+
+                if not self.dlg.isVisible():
+                    QMessageBox.information(self.dlg, "Message", "Operation Cancelled")
+                    break
 
             # Add the polygon and line layers to the map and remove the cloned layer
             QgsProject.instance().removeMapLayer(lyrClone.id())
@@ -669,8 +677,8 @@ class FrequencyOverlaps:
 
                         if geoDistance < self.dlg.sbIgnoreDistance.value() or self.dlg.sbIgnoreDistance.value() == 0:
                             # Add 1 circle to source and 1 circle to target if overlap occurs
-                            geoSrcBuffer = geoSrc.buffer(300, 10)
-                            geoTgtBuffer = geoTgt.buffer(300, 10)
+                            geoSrcBuffer = geoSrc.buffer(100, 10)
+                            geoTgtBuffer = geoTgt.buffer(100, 10)
                             geoCombine = geoSrcBuffer.combine(geoTgtBuffer)
                             f = QgsFeature()
                             f.setGeometry(geoCombine)
@@ -686,7 +694,11 @@ class FrequencyOverlaps:
 
                 # update the progress bar on the completion status
                 intRecordsAnalyzed += 1
-                self.dlg.pbFrequencyOverlaps.setValue((intRecordsAnalyzed / intFeatureCounts) * 100)
+                self.dlg.pbFrequencyOverlaps.setValue(int((intRecordsAnalyzed / intFeatureCounts) * 100))
+
+                if not self.dlg.isVisible():
+                    QMessageBox.information(self.dlg, "Message", "Operation Cancelled")
+                    break
 
             # Add the polygon and line layers to the map
             vlOverlapLocations.updateExtents()
@@ -763,7 +775,7 @@ class FrequencyOverlaps:
                 if boolTest:
                     geoSrc = srcLayer.geometry()
                     geoSrc.transform(xtransform)
-                    geoSrcBuffer = geoSrc.buffer(300, 10)
+                    geoSrcBuffer = geoSrc.buffer(100, 10)
                     # Add 1 circle to the feature if overlaps ovvurs
                     f = QgsFeature()
                     f.setGeometry(geoSrcBuffer)
@@ -772,7 +784,11 @@ class FrequencyOverlaps:
 
                 # update the progress bar on the completion status
                 intRecordsAnalyzed += 1
-                self.dlg.pbFrequencyOverlaps.setValue((intRecordsAnalyzed / intFeatureCounts) * 100)
+                self.dlg.pbFrequencyOverlaps.setValue(int((intRecordsAnalyzed / intFeatureCounts) * 100))
+
+                if not self.dlg.isVisible():
+                    QMessageBox.information(self.dlg, "Message", "Operation Cancelled")
+                    break
 
             # Add the polygon to the map
             vlOverlapLocations.updateExtents()
@@ -898,7 +914,8 @@ class FrequencyOverlaps:
             calcfTgtStartFreq = calcfTgtCenterFreq - (calcfTgtBandwidth / 2)
             calcfTgtStopFreq = calcfTgtCenterFreq + (calcfTgtBandwidth / 2)
 
-        if calcfSrcStopFreq >= calcfTgtStartFreq and calcfTgtStopFreq >= calcfSrcStartFreq:
+
+        if (calcfSrcStartFreq < calcfTgtStopFreq and calcfTgtStartFreq < calcfSrcStopFreq) or (calcfTgtStartFreq < calcfSrcStartFreq and calcfSrcStopFreq < calcfTgtStopFreq):
             return True, calcfSrcCenterFreq,calcfSrcStartFreq, calcfSrcStopFreq, calcfTgtCenterFreq, calcfTgtStartFreq, calcfTgtStopFreq
         else:
             return False, calcfSrcCenterFreq,calcfSrcStartFreq, calcfSrcStopFreq, calcfTgtCenterFreq, calcfTgtStartFreq, calcfTgtStopFreq
@@ -984,7 +1001,7 @@ class FrequencyOverlaps:
                     arrayFoundFreq.append([vC, vD])
                     geoTgt = feaScanFrequency.geometry()
                     geoDistance = geoTgt.distance(geoSrc)
-                    geoTgtBuffer = geoTgt.buffer(300, 10)
+                    geoTgtBuffer = geoTgt.buffer(100, 10)
                     # Add 1 circle to the feature if the feature is in the analysis
                     f = QgsFeature()
                     f.setGeometry(geoTgtBuffer)
@@ -1006,12 +1023,35 @@ class FrequencyOverlaps:
                     if prevEnd < currStart:
                         arrayFreqGaps.append([prevEnd, currStart])
 
-            # Show the area covered by this search on map
+            # Create a feature f for use in inserting into the layers below and set Geometry to NULL
             f = QgsFeature()
+            state = 0
+            # Show the area covered by this search on map
             tempFeat = geoSrcBuffer.boundingBox().asWktPolygon()
             g = QgsGeometry.fromWkt(tempFeat)
-
-            h = geoSrc.buffer(50, 10)
+            h = geoSrc.buffer(20, 10)
+            x = geoSrc.asPoint().x()
+            y = geoSrc.asPoint().y()
+            i = QgsGeometry.fromPolygonXY([[
+            QgsPointXY(x-5, y+49),
+            QgsPointXY(x+5, y+49),
+            QgsPointXY(x+5, y-49),
+            QgsPointXY(x-5, y-49),
+            QgsPointXY(x-5, y+49),  # Close the polygon
+            ]])
+            h = i.combine(h)
+            i = QgsGeometry.fromPolygonXY([[
+                QgsPointXY(x - 49, y + 5),
+                QgsPointXY(x + 49, y + 5),
+                QgsPointXY(x + 49, y - 5),
+                QgsPointXY(x - 49, y - 5),
+                QgsPointXY(x - 49, y + 5),  # Close the polygon
+            ]])
+            h = i.combine(h)
+            i = geoSrc.buffer(50, 10)
+            i = i.difference(geoSrc.buffer(40, 10))
+            h = i.combine(h)
+            # Create a small hole where the source location of the search is
             j = g.difference(h)
             f.setGeometry(j)
 
@@ -1025,37 +1065,59 @@ class FrequencyOverlaps:
             elif sSrc_A_Units == "GHz":
                 fMultiplier = 1000
 
+
             # Check if any frequency gaps were found in the arrayFreqGaps
             if len(arrayFreqGaps) != 0:
+
                 # Insert the first gap if there is a frequency gap between the start frequency the user selected and the lowest frequency found on the map within this range
                 if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-(1/1000000),min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-(1/1000000)])
+                    f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0],min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)])
                     vlOGpr.addFeature(f)
+                    if state == 0:
+                        state = 1
+                        f.setGeometry(QgsGeometry())
+
                 # Insert the rest of the frequency gaps into the table
                 for i in arrayFreqGaps:
-                    f.setAttributes([i[0]+(1/1000000),i[1]-(1/1000000),i[1]-i[0]-(2/1000000)])
+                    f.setAttributes([i[0],i[1],i[1]-i[0]])
                     vlOGpr.addFeature(f)
+                    if state == 0:
+                        state = 1
+                        f.setGeometry(QgsGeometry())
 
                 # Insert the last gap if there is a frequency gap between the stop frequency the user selected and the highest frequency found on the map within this range
                 if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                    f.setAttributes([max(arrayFoundFreq)[1]+(1/1000000),fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-(1/1000000)])
+                    f.setAttributes([max(arrayFoundFreq)[1],fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]])
                     vlOGpr.addFeature(f)
+                    if state == 0:
+                        state = 1
+                        f.setGeometry(QgsGeometry())
             else:
                 # If there is nothing found, it means the whole range the user is searching for is available
                 if len(arrayFoundFreq) == 0:
                     f.setAttributes([fSrcStartFreq*fMultiplier,fSrcStopFreq*fMultiplier,(fSrcStopFreq*fMultiplier) - (fSrcStartFreq*fMultiplier)])
                     vlOGpr.addFeature(f)
+                    if state == 0:
+                        state = 1
+                        f.setGeometry(QgsGeometry())
                 else:
                     if min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier) > 0:
-                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0]-(1/1000000),min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)-(1/1000000)])
+                        f.setAttributes([fSrcStartFreq*fMultiplier,min(arrayFoundFreq)[0],min(arrayFoundFreq)[0] - (fSrcStartFreq*fMultiplier)])
                         vlOGpr.addFeature(f)
+                        if state == 0:
+                            state = 1
+                            f.setGeometry(QgsGeometry())
                     if (fSrcStopFreq * fMultiplier) - max(arrayFoundFreq)[1] > 0:
-                        f.setAttributes([max(arrayFoundFreq)[1]+(1/1000000),fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]-(1/1000000)])
+                        f.setAttributes([max(arrayFoundFreq)[1],fSrcStopFreq * fMultiplier,(fSrcStopFreq * fMultiplier)-max(arrayFoundFreq)[1]])
                         vlOGpr.addFeature(f)
+                        if state == 0:
+                            state = 1
+                            f.setGeometry(QgsGeometry())
 
 
             # Remove the temporary layer which was converted to EPSG:3857 for the search
             QgsProject.instance().removeMapLayer(lyrClone.id())
+
             # Add the polygon to the map
             vlOverlapLocations.updateExtents()
             vlOverlapGaps.updateExtents()
@@ -1068,7 +1130,7 @@ class FrequencyOverlaps:
 
             symbol = vlOverlapGaps.renderer().symbol()
             symbol.setColor(QColor.fromRgb(255, 0, 0))
-            symbol.setOpacity(0.05)
+            symbol.setOpacity(0.3)
 
             vlOverlapLocations.triggerRepaint()
             vlOverlapGaps.triggerRepaint()
